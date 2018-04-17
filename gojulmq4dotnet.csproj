@@ -1,0 +1,144 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6BC75246-83B8-4F09-B2E8-9CAEB1A339FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>ClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>gojulmq4dotnet</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\master" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\logs\refs\remotes\origin\master" />
+    <None Include=".git\objects\01\e884df4748a5b2f3f84cb702565b768d2c2093" />
+    <None Include=".git\objects\0b\541d4aad41d7ddd80cbba803115dff7b049630" />
+    <None Include=".git\objects\1a\38cd04a046ca8f8e4063a7e932354d7ad1a16c" />
+    <None Include=".git\objects\22\92802b6f414f68f29d8a222a0e0f489db51eb5" />
+    <None Include=".git\objects\26\055b21a7f6bede38c6164806236095c8889eb6" />
+    <None Include=".git\objects\4c\59aff664a73a13e6bd7515619648eefc67fef6" />
+    <None Include=".git\objects\54\12f3a69d2335d700acaaefe542e6796e098d84" />
+    <None Include=".git\objects\65\c5ca88a67c30becee01c5a8816d964b03862f9" />
+    <None Include=".git\objects\6b\7c4eed79494f542d9b1563cfa4705002c062db" />
+    <None Include=".git\objects\76\f1c655515740deab7f236f0063650f3cc3a850" />
+    <None Include=".git\objects\93\d42565e5156e592d627529c28ecb3642effb45" />
+    <None Include=".git\objects\94\0794e60f21bbcbd6a04b87b08ac92ab9303511" />
+    <None Include=".git\objects\a9\fd8eee5c6cd8b76bdcd57931b2f518edf94955" />
+    <None Include=".git\objects\b5\edbba8b574e071b051e7e5be0a5831e608ee4f" />
+    <None Include=".git\objects\cc\592d50873b1e7551b27fe39df0df71f7a02e9b" />
+    <None Include=".git\objects\ef\6c4617d7f6aa83d2b92427e84e89f6c5cdfb6f" />
+    <None Include=".git\objects\f0\f91b1e28eb5f29228b7e6ce957dbca7eaf9228" />
+    <None Include=".git\objects\fb\e40eeff5427d87e72e5be1e9f1796ce0474a61" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\master" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\refs\remotes\origin\master" />
+    <None Include=".vs\gojulmq4dotnet-api\v15\.suo" />
+    <None Include=".vs\gojulmq4dotnet-api\v15\Server\sqlite3\db.lock" />
+    <None Include=".vs\gojulmq4dotnet-api\v15\Server\sqlite3\storage.ide" />
+    <None Include=".vs\ProjectSettings.json" />
+    <None Include=".vs\slnx.sqlite" />
+    <None Include=".vs\tasks.vs.json" />
+    <None Include=".vs\VSWorkspaceState.json" />
+    <None Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\GojulMQ4Net-Api.csproj.CoreCompileInputs.cache" />
+    <None Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\GojulMQ4Net-Api.csprojResolveAssemblyReference.cache" />
+    <None Include="GojulMQ4Net-Api\obj\GojulMQ4Net-Api.csproj.nuget.cache" />
+    <None Include="GojulMQ4Net-Api\obj\GojulMQ4Net-Api.csproj.nuget.g.props" />
+    <None Include="GojulMQ4Net-Api\obj\GojulMQ4Net-Api.csproj.nuget.g.targets" />
+    <None Include="GojulMQ4Net-Api\obj\project.assets.json" />
+    <None Include="GojulMQ4Net-Api\obj\Release\netcoreapp1.1\GojulMQ4Net-Api.csproj.CoreCompileInputs.cache" />
+    <None Include="GojulMQ4Net-Kafka\obj\Debug\netcoreapp1.1\GojulMQ4Net-Kafka.csproj.CoreCompileInputs.cache" />
+    <None Include="GojulMQ4Net-Kafka\obj\GojulMQ4Net-Kafka.csproj.nuget.cache" />
+    <None Include="GojulMQ4Net-Kafka\obj\GojulMQ4Net-Kafka.csproj.nuget.g.props" />
+    <None Include="GojulMQ4Net-Kafka\obj\GojulMQ4Net-Kafka.csproj.nuget.g.targets" />
+    <None Include="GojulMQ4Net-Kafka\obj\project.assets.json" />
+    <None Include="GojulMQ4Net-Kafka\obj\Release\netcoreapp1.1\GojulMQ4Net-Kafka.csproj.CoreCompileInputs.cache" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".git\ms-persist.xml" />
+    <Content Include="GojulMQ4Net-Api\GojulMQ4Net-Api.csproj" />
+    <Content Include="GojulMQ4Net-Kafka\GojulMQ4Net-Kafka.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GojulMQ4Net-Api\GojulMQException.cs" />
+    <Compile Include="GojulMQ4Net-Api\IGojulMQMessageConsumer.cs" />
+    <Compile Include="GojulMQ4Net-Api\IGojulMQMessageKeyProvider.cs" />
+    <Compile Include="GojulMQ4Net-Api\IGojulMQMessageListener.cs" />
+    <Compile Include="GojulMQ4Net-Api\IGojulMQMessageProducer.cs" />
+    <Compile Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\GojulMQ4Net-Api.AssemblyInfo.cs" />
+    <Compile Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="GojulMQ4Net-Api\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="GojulMQ4Net-Api\obj\Release\netcoreapp1.1\GojulMQ4Net-Api.AssemblyInfo.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\Class1.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\obj\Debug\netcoreapp1.1\GojulMQ4Net-Kafka.AssemblyInfo.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\obj\Debug\netcoreapp1.1\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="GojulMQ4Net-Kafka\obj\Release\netcoreapp1.1\GojulMQ4Net-Kafka.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\objects\pack\" />
+    <Folder Include=".git\refs\tags\" />
+    <Folder Include="GojulMQ4Net-Api\bin\Debug\netcoreapp1.1\" />
+    <Folder Include="GojulMQ4Net-Api\bin\Release\netcoreapp1.1\" />
+    <Folder Include="GojulMQ4Net-Kafka\bin\Debug\netcoreapp1.1\" />
+    <Folder Include="GojulMQ4Net-Kafka\bin\Release\netcoreapp1.1\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>
