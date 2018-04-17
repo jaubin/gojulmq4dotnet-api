@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Org.Gojul.GojulMQ4Net_Api
 {
     /// <summary>
-    /// Interface <code>GojulMQMessageProducer</code> is used to produce messages
+    /// Interface <code>IGojulMQMessageProducer</code> is used to produce messages
     /// to send to a message broker. Note that it's not up to you to implement
     /// this class, it is implemented by the various library implementations. Implementors
     /// should generally considered as being thread-safe, contrary to what happens with
