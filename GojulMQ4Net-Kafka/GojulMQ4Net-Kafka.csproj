@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GojulMQ4Net-Api\GojulMQ4Net-Api.csproj" />
+  </ItemGroup>
+
 </Project>
