@@ -39,6 +39,8 @@ namespace Org.Gojul.GojulMQ4Net_Kafka_Test
             {
                 Dummy dummy = new Dummy { value = "Hello, " + rnd.Next() };
                 producer.SendMessage("dummyTopic", e => e.value, dummy);
+
+                Console.WriteLine("Produced : " + dummy.value);
             }
         }
     }

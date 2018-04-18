@@ -96,6 +96,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 producer.ProduceAsync(topic, messageKeyProvider(msg), msg);
                 i++;
             }
+            producer.Flush(-1);
             log.Info(string.Format("Successfully sent %d messages to topic %s", i, topic));
 
         }
