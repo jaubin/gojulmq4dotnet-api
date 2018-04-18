@@ -1,0 +1,2 @@
+﻿File Dummy.cs has been generated from schema dummy.avsc. As of now there's no way to automate this generation in a script. Please check
+https://github.com/confluentinc/confluent-kafka-dotnet for further information.

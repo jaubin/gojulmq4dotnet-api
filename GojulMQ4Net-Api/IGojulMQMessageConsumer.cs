@@ -2,6 +2,15 @@
 
 namespace Org.Gojul.GojulMQ4Net_Api
 {
+
+    /// <summary>
+    /// Method invoked when a message is received. Note that it
+    /// is definitely not a good idea to throw an exception from
+    /// the listener, as it could have some unpleasant side effects.
+    /// </summary>
+    /// <param name="message">the message to process.</param>
+    public delegate void GojulMQMessageListener<T>(T message);
+
     /// <summary>
     /// Interface <code>IGojulMQMessageConsumer</code> is used
     /// in order to make it possible to consume messages easily.
@@ -23,7 +32,7 @@ namespace Org.Gojul.GojulMQ4Net_Api
         /// <param name="topic">the name of the topic from which messages must be consumed.</param>
         /// <param name="messageListener">the listener implementation used to listen to messages.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is <code>Null</code>.</exception>
-        void ConsumeMessages(string topic, IGojulMQMessageListener<T> messageListener);
+        void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener);
 
         /// <summary>
         /// Notify the consumer to stop doing stuff. Note that once a consumer has

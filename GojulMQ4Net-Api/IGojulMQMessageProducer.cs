@@ -3,6 +3,15 @@ using System.Collections.Generic;
 
 namespace Org.Gojul.GojulMQ4Net_Api
 {
+
+    /// <summary>
+    /// Return the key for object <code>msg</code>. Depending on your
+    /// needs this method may return <code>Null</code>.
+    /// </summary>
+    /// <param name="msg">the message for which a key must be generated.</param>
+    /// <returns>the key for object <code>msg</code>.</returns>
+    public delegate string GojulMQMessageKeyProvider<T>(T msg);
+
     /// <summary>
     /// Interface <code>IGojulMQMessageProducer</code> is used to produce messages
     /// to send to a message broker. Note that it's not up to you to implement
@@ -22,7 +31,7 @@ namespace Org.Gojul.GojulMQ4Net_Api
         /// <param name="message">the message to send itself.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is <code>Null</code>.</exception>
         /// <exception cref="GojulMQException">if a transfer error occured.</exception>
-        void SendMessage(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, T message);
+        void SendMessage(string topic, GojulMQMessageKeyProvider<T> messageKeyProvider, T message);
 
         /// <summary>
         /// Send the messages from iterable <code>messages</code>. This method allows to make batch
@@ -33,7 +42,7 @@ namespace Org.Gojul.GojulMQ4Net_Api
         /// <param name="messages">the messages to send.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is <code>Null</code>.</exception>
         /// <exception cref="GojulMQException">if a transfer error occured.</exception>
-        void SendMessages(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, IEnumerable<T> messages);
+        void SendMessages(string topic, GojulMQMessageKeyProvider<T> messageKeyProvider, IEnumerable<T> messages);
     }
 }
 

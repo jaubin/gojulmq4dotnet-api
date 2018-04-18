@@ -72,16 +72,16 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             producer.Dispose();
         }
 
-        /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, IGojulMQMessageKeyProvider{T}, T)"/>
-        public void SendMessage(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, T message)
+        /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, GojulMQMessageKeyProvider{T}, T)"/>
+        public void SendMessage(string topic, GojulMQMessageKeyProvider<T> messageKeyProvider, T message)
         {
             Condition.Requires( (object) message, "message").IsNotNull();
 
             SendMessages(topic, messageKeyProvider, new[] { message });
         }
 
-        /// <see cref="IGojulMQMessageProducer{T}.SendMessages(string, IGojulMQMessageKeyProvider{T}, IEnumerable{T})"/>
-        public void SendMessages(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, IEnumerable<T> messages)
+        /// <see cref="IGojulMQMessageProducer{T}.SendMessages(string, GojulMQMessageKeyProvider{T}, IEnumerable{T})"/>
+        public void SendMessages(string topic, GojulMQMessageKeyProvider<T> messageKeyProvider, IEnumerable<T> messages)
         {
             Condition.Requires(topic, "topic").IsNotNull().IsNotEmpty();
             Condition.Requires(messageKeyProvider, "messageKeyProvider").IsNotNull();
@@ -93,7 +93,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             foreach (T msg in messages)
             {
                 Condition.Requires((object)msg, "msg").IsNotNull();
-                producer.ProduceAsync(topic, messageKeyProvider.GetKey(msg), msg);
+                producer.ProduceAsync(topic, messageKeyProvider(msg), msg);
                 i++;
             }
             log.Info(string.Format("Successfully sent %d messages to topic %s", i, topic));

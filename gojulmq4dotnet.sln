@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GojulMQ4Net-Api", "GojulMQ4Net-Api\GojulMQ4Net-Api.csproj", "{26724650-2563-42AE-8185-713657D60543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GojulMQ4Net-Api", "GojulMQ4Net-Api\GojulMQ4Net-Api.csproj", "{26724650-2563-42AE-8185-713657D60543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GojulMQ4Net-Kafka", "GojulMQ4Net-Kafka\GojulMQ4Net-Kafka.csproj", "{D5CF35F8-6182-48DF-81A6-911B2172BBAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GojulMQ4Net-Kafka", "GojulMQ4Net-Kafka\GojulMQ4Net-Kafka.csproj", "{D5CF35F8-6182-48DF-81A6-911B2172BBAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GojulMQ4Net-Kafka-Test", "GojulMQ4Net-Kafka-Test\GojulMQ4Net-Kafka-Test.csproj", "{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{26724650-2563-42AE-8185-713657D60543} = {26724650-2563-42AE-8185-713657D60543}
+		{D5CF35F8-6182-48DF-81A6-911B2172BBAE} = {D5CF35F8-6182-48DF-81A6-911B2172BBAE}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,10 @@ Global
 		{D5CF35F8-6182-48DF-81A6-911B2172BBAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5CF35F8-6182-48DF-81A6-911B2172BBAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5CF35F8-6182-48DF-81A6-911B2172BBAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

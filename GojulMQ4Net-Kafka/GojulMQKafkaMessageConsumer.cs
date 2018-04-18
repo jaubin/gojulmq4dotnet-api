@@ -19,7 +19,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
     /// </summary>
     /// <typeparam name="T">the type of messages to be read. Note that these messages must follow the norm
     /// defined by Avro so that they're recorded in the schema registry.</typeparam>
-    class GojulMQKafkaMessageConsumer<T> : IGojulMQMessageConsumer<T>
+    public class GojulMQKafkaMessageConsumer<T> : IGojulMQMessageConsumer<T>
     {
         /// <summary>
         /// The bootstrap servers property used for configuration.
@@ -65,15 +65,15 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 new AvroDeserializer<T>());
         }
 
-        /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, IGojulMQMessageListener{T})"/>
-        public void ConsumeMessages(string topic, IGojulMQMessageListener<T> messageListener)
+        /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T})"/>
+        public void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener)
         {
             Condition.Requires(topic, "topic").IsNotNull().IsNotEmpty();
             Condition.Requires(messageListener, "messageListener").IsNotNull();
 
             consumer.Subscribe(topic);
 
-            consumer.OnMessage += (_, msg) => messageListener.OnMessage(msg.Value);
+            consumer.OnMessage += (_, msg) => messageListener(msg.Value);
             consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
             consumer.OnError += (_, error) =>
