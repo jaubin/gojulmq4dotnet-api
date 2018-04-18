@@ -2,10 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
     <PackageReference Include="Confluent.Kafka" Version="0.11.4" />
+    <PackageReference Include="Preconditions.NET" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
