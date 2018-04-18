@@ -73,13 +73,29 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, IGojulMQMessageKeyProvider{T}, T)"/>
         public void SendMessage(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, T message)
         {
+            Condition.Requires( (object) message, "message").IsNotNull();
+
             SendMessages(topic, messageKeyProvider, new[] { message });
         }
 
         /// <see cref="IGojulMQMessageProducer{T}.SendMessages(string, IGojulMQMessageKeyProvider{T}, IEnumerable{T})"/>
         public void SendMessages(string topic, IGojulMQMessageKeyProvider<T> messageKeyProvider, IEnumerable<T> messages)
         {
-            throw new NotImplementedException();
+            Condition.Requires(topic, "topic").IsNotNull().IsNotEmpty();
+            Condition.Requires(messageKeyProvider, "messageKeyProvider").IsNotNull();
+            Condition.Requires(messages, "messages").IsNotNull();
+
+            log.Info(string.Format("Starting to send messages to topic %s", topic));
+
+            int i = 0;
+            foreach (T msg in messages)
+            {
+                Condition.Requires((object)msg, "msg").IsNotNull();
+                producer.ProduceAsync(topic, messageKeyProvider.GetKey(msg), msg);
+                i++;
+            }
+            log.Info(string.Format("Successfully sent %d messages to topic %s", i, topic));
+
         }
     }
 }
