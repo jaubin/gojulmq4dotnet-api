@@ -48,6 +48,8 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         /// </summary>
         /// <param name="settings">the settings dictionary, which follows
         /// the norm defined by Kafka settings.</param>
+        /// <exception cref="ArgumentNullException">if any of the method parameters is null.</exception>
+        /// <exception cref="ArgumentException">if any of the mandatory Kafka parameters is not set.</exception>
         public GojulMQKafkaMessageProducer(Dictionary<string, object> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();

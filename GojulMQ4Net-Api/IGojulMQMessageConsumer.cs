@@ -18,12 +18,12 @@ namespace Org.Gojul.GojulMQ4Net_Api
 	public interface IGojulMQMessageConsumer<T>: IDisposable
     {
         /// <summary>
-        /// Consume the messages from topic with name <code>topicName</code>.
+        /// Consume the messages from topic with name <code>topic</code>.
         /// </summary>
-        /// <param name="topicName">the name of the topic from which messages must be consumed.</param>
+        /// <param name="topic">the name of the topic from which messages must be consumed.</param>
         /// <param name="messageListener">the listener implementation used to listen to messages.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is <code>Null</code>.</exception>
-        void ConsumeMessages(string topicName, IGojulMQMessageListener<T> messageListener);
+        void ConsumeMessages(string topic, IGojulMQMessageListener<T> messageListener);
 
         /// <summary>
         /// Notify the consumer to stop doing stuff. Note that once a consumer has
