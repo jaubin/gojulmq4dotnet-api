@@ -137,7 +137,7 @@
     <Folder Include="GojulMQ4Net-Kafka\bin\Debug\netcoreapp1.1\" />
     <Folder Include="GojulMQ4Net-Kafka\bin\Release\netcoreapp1.1\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
     <VisualStudio AllowExistingFolder="true" />
   </ProjectExtensions>
