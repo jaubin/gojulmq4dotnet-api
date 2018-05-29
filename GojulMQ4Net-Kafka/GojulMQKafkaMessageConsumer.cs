@@ -64,7 +64,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
 
             consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
                 new AvroDeserializer<T>());
-	    cts = new CancellationTokenSource();
+            cts = new CancellationTokenSource();
         }
 
         /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T})"/>
@@ -75,7 +75,6 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
 
             consumer.Subscribe(topic);
 
-            consumer.OnMessage += (_, msg) => messageListener(msg.Value);
             consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
             consumer.OnError += (_, error) =>
@@ -86,8 +85,23 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
 
             while (!cts.Token.IsCancellationRequested)
             {
-                consumer.Poll(100);
-                consumer.CommitAsync();
+                int count = 0;
+                Message<string, T> msg;
+                while (consumer.Consume(out msg, 100)
+                      && !cts.Token.IsCancellationRequested)
+                {
+                    messageListener(msg.Value);
+                    count++;
+                    if (count % 100 == 0) {
+                        // We force synchronous commit there.
+                        consumer.CommitAsync().Wait();
+                        count = 0;
+                    }
+                }
+
+                if (count > 0) {
+                    consumer.CommitAsync().Wait();
+                }
             }
 
             consumer.Dispose();
@@ -98,7 +112,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         public void Dispose()
         {
             consumer.Dispose();
-	    cts.Dispose();
+            cts.Dispose();
         }
 
         /// <see cref="IGojulMQMessageConsumer{T}.StopConsumer"/>

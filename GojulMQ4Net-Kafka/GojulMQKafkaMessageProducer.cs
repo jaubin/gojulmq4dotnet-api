@@ -93,9 +93,9 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             foreach (T msg in messages)
             {
                 Condition.Requires((object)msg, "msg").IsNotNull();
-		// We force the producer to produce synchronously. The goal here is to avoid
-		// hundreds of thread producing items in the loop, which would be a nightmare
-		// in term for performance.
+                // We force the producer to produce synchronously. The goal here is to avoid
+                // hundreds of thread producing items in the loop, which would be a nightmare
+                // in term for performance.
                 producer.ProduceAsync(topic, messageKeyProvider(msg), msg).Wait();
                 i++;
             }
