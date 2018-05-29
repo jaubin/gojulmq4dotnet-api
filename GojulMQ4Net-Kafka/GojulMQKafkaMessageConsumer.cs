@@ -6,6 +6,7 @@ using Org.Gojul.GojulMQ4Net_Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Org.Gojul.GojulMQ4Net_Kafka
 {
@@ -39,7 +40,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         private static readonly ILog log = LogManager.GetLogger<GojulMQKafkaMessageConsumer<T>>();
 
         private readonly Consumer<string, T> consumer;
-        private volatile Boolean isStopped;
+        private readonly CancellationTokenSource cts;
 
         /// <summary>
         /// Constructor.
@@ -63,6 +64,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
 
             consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
                 new AvroDeserializer<T>());
+	    cts = new CancellationTokenSource();
         }
 
         /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T})"/>
@@ -82,11 +84,9 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 throw new GojulMQException(error.Reason);
             };
 
-            while (!isStopped)
+            while (!cts.Token.IsCancellationRequested)
             {
                 consumer.Poll(100);
-                // Looks like as of now the C# client for Kafka does not support commitSync.
-                // TODO : add commitSync support whenever possible.
                 consumer.CommitAsync();
             }
 
@@ -98,12 +98,13 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         public void Dispose()
         {
             consumer.Dispose();
+	    cts.Dispose();
         }
 
         /// <see cref="IGojulMQMessageConsumer{T}.StopConsumer"/>
         public void StopConsumer()
         {
-            this.isStopped = true;
+            this.cts.Cancel();
         }
     }
 }
