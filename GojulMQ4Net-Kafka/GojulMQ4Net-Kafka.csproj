@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Common.Logging" Version="3.4.1" />
-    <PackageReference Include="Conditions" Version="2.1.0" />
-    <PackageReference Include="Confluent.Kafka" Version="0.11.4" />
-    <PackageReference Include="Confluent.Kafka.Avro" Version="0.11.4" />
-    <PackageReference Include="librdkafka.redist" Version="0.11.4" />
+    <PackageReference Include="Common.Logging" Version="3.4.1" TargetFramework="net461" />
+    <PackageReference Include="Conditions" Version="2.1.0" TargetFramework="net461" />
+    <PackageReference Include="Confluent.Kafka" Version="0.11.4" TargetFramework="net461" />
+    <PackageReference Include="Confluent.Kafka.Avro" Version="0.11.4" TargetFramework="net461" />
+    <PackageReference Include="librdkafka.redist" Version="0.11.4" TargetFramework="net461" />
   </ItemGroup>
 
   <ItemGroup>
