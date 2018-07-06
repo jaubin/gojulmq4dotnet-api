@@ -14,13 +14,6 @@ In order to build this project you need dotnet core 2. The project compiles by r
 ./build.sh
 ``` 
 
-## Note to RHEL / CentOS users using Kafka
-On RHEL / CentOS you may run into the following error when running the program :
-```
-Unhandled Exception: System.DllNotFoundException: Failed to load the librdkafka native library.
-```
-
-To solve this, you must install packages librdkafka and librdkafka-devel using command :
-```
-sudo yum install librdkafka librdkafka-devel
-```
+## Additional implementation specific remarks
+In each solution directory we've created a README file which contains the remarks dedicated
+to that implementation.
