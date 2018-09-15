@@ -40,7 +40,6 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         private static readonly ILog log = LogManager.GetLogger<GojulMQKafkaMessageConsumer<T>>();
 
         private readonly Consumer<string, T> consumer;
-        private readonly CancellationTokenSource cts;
 
         /// <summary>
         /// Constructor.
@@ -64,14 +63,19 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
 
             consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
                 new AvroDeserializer<T>());
-            cts = new CancellationTokenSource();
         }
 
-        /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T})"/>
-        public void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener)
+        /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T}, CancellationToken)"/>
+        public void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener,
+            CancellationToken cancellationToken)
         {
             Condition.Requires(topic, "topic").IsNotNull().IsNotEmpty();
             Condition.Requires(messageListener, "messageListener").IsNotNull();
+            // Looks like Condition.Requires does not like struct like CancellationToken as arguments...
+            if (cancellationToken == null)
+            {
+                throw new ArgumentNullException("cancellationToken is null");
+            }
 
             consumer.Subscribe(topic);
 
@@ -83,12 +87,12 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 throw new GojulMQException(error.Reason);
             };
 
-            while (!cts.Token.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 int count = 0;
                 Message<string, T> msg;
                 while (consumer.Consume(out msg, 100)
-                      && !cts.Token.IsCancellationRequested)
+                      && !cancellationToken.IsCancellationRequested)
                 {
                     messageListener(msg.Value);
                     count++;
@@ -105,6 +109,8 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             }
 
             consumer.Dispose();
+
+            cancellationToken.ThrowIfCancellationRequested();
         }
 
 
@@ -112,13 +118,6 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         public void Dispose()
         {
             consumer.Dispose();
-            cts.Dispose();
-        }
-
-        /// <see cref="IGojulMQMessageConsumer{T}.StopConsumer"/>
-        public void StopConsumer()
-        {
-            this.cts.Cancel();
         }
     }
 }

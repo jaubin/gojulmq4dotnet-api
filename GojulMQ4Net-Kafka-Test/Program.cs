@@ -26,10 +26,13 @@ namespace Org.Gojul.GojulMQ4Net_Kafka_Test
         {
             Dictionary<string, object> settings = CreateConf();
 
+            CancellationTokenSource cts = new CancellationTokenSource();
+
             IGojulMQMessageConsumer<Dummy> consumer = new GojulMQKafkaMessageConsumer<Dummy>(settings);
 
             new Thread(() => {
-                consumer.ConsumeMessages("dummyTopic", (msg) => Console.WriteLine("Consumed : " + msg.value));
+                consumer.ConsumeMessages("dummyTopic", (msg) => Console.WriteLine("Consumed : " + msg.value),
+                    cts.Token);
             }).Start();
 
             IGojulMQMessageProducer<Dummy> producer = new GojulMQKafkaMessageProducer<Dummy>(settings);

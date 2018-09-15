@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Org.Gojul.GojulMQ4Net_Api
 {
@@ -31,13 +32,9 @@ namespace Org.Gojul.GojulMQ4Net_Api
         /// </summary>
         /// <param name="topic">the name of the topic from which messages must be consumed.</param>
         /// <param name="messageListener">the listener implementation used to listen to messages.</param>
+        /// <param name="cancellationToken">the cancellation token used in order to stop the listener if necessary.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is <code>Null</code>.</exception>
-        void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener);
-
-        /// <summary>
-        /// Notify the consumer to stop doing stuff. Note that once a consumer has
-        /// been stopped it cannot be reused.
-        /// </summary>
-        void StopConsumer();
+        void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener,
+            CancellationToken cancellationToken);
     }
 }
