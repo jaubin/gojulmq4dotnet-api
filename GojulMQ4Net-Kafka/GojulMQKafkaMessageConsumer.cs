@@ -71,13 +71,9 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         {
             Condition.Requires(topic, "topic").IsNotNull().IsNotEmpty();
             Condition.Requires(messageListener, "messageListener").IsNotNull();
-            // Looks like Condition.Requires does not like struct like CancellationToken as arguments...
-            if (cancellationToken == null)
-            {
-                throw new ArgumentNullException("cancellationToken is null");
-            }
+            // CancellationToken cannot be null as it is a struct.
 
-            consumer.Subscribe(topic);
+	    consumer.Subscribe(topic);
 
             consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
