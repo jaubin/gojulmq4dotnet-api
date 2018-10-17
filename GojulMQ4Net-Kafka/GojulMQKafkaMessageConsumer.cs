@@ -51,13 +51,13 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         public GojulMQKafkaMessageConsumer(Dictionary<string, object> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();
-            Condition.Requires((string)settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
+            Condition.Requires((string) settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[GROUP_ID], GROUP_ID)
+            Condition.Requires((string) settings[GROUP_ID], GROUP_ID)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
+            Condition.Requires((string) settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
                 .IsNotNull()
                 .IsNotEmpty();
 
