@@ -5,4 +5,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Conditions" Version="2.1.0" />
+    <PackageReference Include="Serilog" Version="2.7.1" />
+  </ItemGroup>
+
 </Project>

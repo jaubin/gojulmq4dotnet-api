@@ -7,10 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GojulMQ4Net-Api", "GojulMQ4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GojulMQ4Net-Kafka", "GojulMQ4Net-Kafka\GojulMQ4Net-Kafka.csproj", "{D5CF35F8-6182-48DF-81A6-911B2172BBAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GojulMQ4Net-Kafka-Test", "GojulMQ4Net-Kafka-Test\GojulMQ4Net-Kafka-Test.csproj", "{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GojulMQ4Net-Kafka-Test", "GojulMQ4Net-Kafka-Test\GojulMQ4Net-Kafka-Test.csproj", "{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{26724650-2563-42AE-8185-713657D60543} = {26724650-2563-42AE-8185-713657D60543}
 		{D5CF35F8-6182-48DF-81A6-911B2172BBAE} = {D5CF35F8-6182-48DF-81A6-911B2172BBAE}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GojulMQ4Net-Api.Tests", "GojulMQ4Net-Api.Tests\GojulMQ4Net-Api.Tests.csproj", "{EDB411CC-5458-4B15-833F-6506B67CA3C6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{26724650-2563-42AE-8185-713657D60543} = {26724650-2563-42AE-8185-713657D60543}
 	EndProjectSection
 EndProject
 Global
@@ -31,6 +36,10 @@ Global
 		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{546BE649-31BE-4CA1-A4CC-0F742D84C5A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB411CC-5458-4B15-833F-6506B67CA3C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB411CC-5458-4B15-833F-6506B67CA3C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB411CC-5458-4B15-833F-6506B67CA3C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB411CC-5458-4B15-833F-6506B67CA3C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
