@@ -56,10 +56,10 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             Condition.Requires((string) settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[CLIENT_ID], CLIENT_ID)
+            Condition.Requires((string) settings[CLIENT_ID], CLIENT_ID)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
+            Condition.Requires((string) settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
                 .IsNotNull()
                 .IsNotEmpty();
 
@@ -75,7 +75,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, GojulMQMessageKeyProvider{T}, T)"/>
         public void SendMessage(string topic, GojulMQMessageKeyProvider<T> messageKeyProvider, T message)
         {
-            Condition.Requires( (object) message, "message").IsNotNull();
+            Condition.Requires((object) message, "message").IsNotNull();
 
             SendMessages(topic, messageKeyProvider, new[] { message });
         }
@@ -92,7 +92,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             int i = 0;
             foreach (T msg in messages)
             {
-                Condition.Requires((object)msg, "msg").IsNotNull();
+                Condition.Requires((object) msg, "msg").IsNotNull();
                 // We force the producer to produce synchronously. The goal here is to avoid
                 // hundreds of thread producing items in the loop, which would be a nightmare
                 // in term for performance.
