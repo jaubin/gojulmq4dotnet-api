@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿using Serilog;
 using Conditions;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
@@ -37,7 +37,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         /// </summary>
         public static readonly string GROUP_ID = "group.id";
 
-        private static readonly ILog log = LogManager.GetLogger<GojulMQKafkaMessageConsumer<T>>();
+        private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageConsumer<T>>();
 
         private readonly Consumer<string, T> consumer;
 

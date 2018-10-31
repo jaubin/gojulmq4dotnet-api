@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿using Serilog;
 using Conditions;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
@@ -39,7 +39,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         /// </summary>
         public static readonly string CLIENT_ID = "client.id";
 
-        private static readonly ILog log = LogManager.GetLogger<GojulMQKafkaMessageProducer<T>>();
+        private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageProducer<T>>();
 
         private readonly Producer<string, T> producer;
 
@@ -87,7 +87,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             Condition.Requires(messageKeyProvider, "messageKeyProvider").IsNotNull();
             Condition.Requires(messages, "messages").IsNotNull();
 
-            log.Info(string.Format("Starting to send messages to topic %s", topic));
+            log.Information(string.Format("Starting to send messages to topic %s", topic));
 
             int i = 0;
             foreach (T msg in messages)
@@ -100,7 +100,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 i++;
             }
             producer.Flush(-1);
-            log.Info(string.Format("Successfully sent %d messages to topic %s", i, topic));
+            log.Information(string.Format("Successfully sent %d messages to topic %s", i, topic));
 
         }
     }
