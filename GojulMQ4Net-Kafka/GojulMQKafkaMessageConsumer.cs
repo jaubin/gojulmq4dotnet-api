@@ -51,13 +51,13 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
         public GojulMQKafkaMessageConsumer(Dictionary<string, object> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();
-            Condition.Requires((string) settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
+            Condition.Requires((string)settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string) settings[GROUP_ID], GROUP_ID)
+            Condition.Requires((string)settings[GROUP_ID], GROUP_ID)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string) settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
+            Condition.Requires((string)settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
                 .IsNotNull()
                 .IsNotEmpty();
 
@@ -73,7 +73,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             Condition.Requires(messageListener, "messageListener").IsNotNull();
             // CancellationToken cannot be null as it is a struct.
 
-	        consumer.Subscribe(topic);
+            consumer.Subscribe(topic);
 
             consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
@@ -92,14 +92,16 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
                 {
                     messageListener(msg.Value);
                     count++;
-                    if (count % 100 == 0) {
+                    if (count % 100 == 0)
+                    {
                         // We force synchronous commit there.
                         consumer.CommitAsync().Wait();
                         count = 0;
                     }
                 }
 
-                if (count > 0) {
+                if (count > 0)
+                {
                     consumer.CommitAsync().Wait();
                 }
             }

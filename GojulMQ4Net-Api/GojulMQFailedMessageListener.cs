@@ -36,7 +36,7 @@ namespace Org.Gojul.GojulMQ4Net_Api
             Condition.Requires(errorTopic).IsNotNullOrWhiteSpace();
 
             this.producer = producer;
-            this.listener = listener;  
+            this.listener = listener;
             this.errorTopic = errorTopic;
         }
 
