@@ -73,7 +73,7 @@ namespace Org.Gojul.GojulMQ4Net_Kafka
             Condition.Requires(messageListener, "messageListener").IsNotNull();
             // CancellationToken cannot be null as it is a struct.
 
-	    consumer.Subscribe(topic);
+	        consumer.Subscribe(topic);
 
             consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
