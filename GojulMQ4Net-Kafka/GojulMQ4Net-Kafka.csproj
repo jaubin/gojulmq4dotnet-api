@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Harmless warnings which pollute the build -->
+    <NoWarn>NU5100</NoWarn>
+    <NoWarn>NU5118</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
