@@ -1,11 +1,11 @@
 ﻿using org.gojul.gojulmq4j.kafka.tester;
-using Org.Gojul.GojulMQ4Net_Api;
-using Org.Gojul.GojulMQ4Net_Kafka;
+using Org.Gojul.GojulMQ4Net.Api;
+using Org.Gojul.GojulMQ4Net.Kafka;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Org.Gojul.GojulMQ4Net_Kafka_Test
+namespace Org.Gojul.GojulMQ4Net.Kafka_Test
 {
 
     class Program

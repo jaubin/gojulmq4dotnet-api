@@ -2,13 +2,13 @@
 using Conditions;
 using Confluent.Kafka;
 using Confluent.Kafka.Serialization;
-using Org.Gojul.GojulMQ4Net_Api;
+using Org.Gojul.GojulMQ4Net.Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace Org.Gojul.GojulMQ4Net_Kafka
+namespace Org.Gojul.GojulMQ4Net.Kafka
 {
     /// <summary>
     /// Class <code>GojulMQKafkaMessageConsumer</code> is the Kafka implementation of interface

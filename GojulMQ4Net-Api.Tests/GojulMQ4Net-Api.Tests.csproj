@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RootNamespace>GojulMQ4Net_Api.Tests</RootNamespace>
+    <RootNamespace>GojulMQ4Net.Api.Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

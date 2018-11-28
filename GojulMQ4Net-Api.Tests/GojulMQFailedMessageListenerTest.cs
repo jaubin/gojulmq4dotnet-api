@@ -3,9 +3,9 @@ using System;
 using Moq;
 using Xunit;
 
-using Org.Gojul.GojulMQ4Net_Api;
+using Org.Gojul.GojulMQ4Net.Api;
 
-namespace Org.Gojul.GojulMQ4Net_Api.Tests
+namespace Org.Gojul.GojulMQ4Net.Api.Tests
 {
     public class GojulMQFailedMessageListenerTest: IDisposable
     {

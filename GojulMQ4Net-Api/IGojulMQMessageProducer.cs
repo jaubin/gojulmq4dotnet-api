@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Org.Gojul.GojulMQ4Net_Api
+namespace Org.Gojul.GojulMQ4Net.Api
 {
 
     /// <summary>

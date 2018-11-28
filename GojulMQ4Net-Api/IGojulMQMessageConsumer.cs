@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Org.Gojul.GojulMQ4Net_Api
+namespace Org.Gojul.GojulMQ4Net.Api
 {
 
     /// <summary>

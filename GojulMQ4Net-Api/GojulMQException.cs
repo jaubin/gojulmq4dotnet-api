@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Org.Gojul.GojulMQ4Net_Api
+namespace Org.Gojul.GojulMQ4Net.Api
 {
     /// <summary>
     /// Class <code>GojulMQException</code> represents the

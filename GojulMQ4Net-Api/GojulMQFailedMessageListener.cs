@@ -5,7 +5,7 @@ using System.Text;
 using Serilog;
 using Conditions;
 
-namespace Org.Gojul.GojulMQ4Net_Api
+namespace Org.Gojul.GojulMQ4Net.Api
 {
     /// <summary>
     /// Class <code>GojulMQFailedMessageListener</code> is a simple wrapper
