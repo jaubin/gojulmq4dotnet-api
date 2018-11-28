@@ -14,10 +14,10 @@ namespace Org.Gojul.GojulMQ4Net.Kafka_Test
         {
             return new Dictionary<string, object>
             {
-                { GojulMQKafkaMessageProducer<object>.BOOTSTRAP_SERVERS, "localhost:9092" },
-                { GojulMQKafkaMessageProducer<object>.CLIENT_ID, "TestProducer" },
-                { GojulMQKafkaMessageProducer<object>.SCHEMA_REGISTRY_URL, "http://localhost:8081" },
-                { GojulMQKafkaMessageConsumer<object>.GROUP_ID, "TestConsumer" }
+                { GojulMQKafkaMessageProducer<object>.BootstrapServers, "localhost:9092" },
+                { GojulMQKafkaMessageProducer<object>.ClientId, "TestProducer" },
+                { GojulMQKafkaMessageProducer<object>.SchemaRegistryUrl, "http://localhost:8081" },
+                { GojulMQKafkaMessageConsumer<object>.GroupId, "TestConsumer" }
 
             };
         }

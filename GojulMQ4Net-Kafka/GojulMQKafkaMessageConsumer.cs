@@ -20,22 +20,22 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
     /// </summary>
     /// <typeparam name="T">the type of messages to be read. Note that these messages must follow the norm
     /// defined by Avro so that they're recorded in the schema registry.</typeparam>
-    public class GojulMQKafkaMessageConsumer<T> : IGojulMQMessageConsumer<T>
+    public sealed class GojulMQKafkaMessageConsumer<T> : IGojulMQMessageConsumer<T>
     {
         /// <summary>
         /// The bootstrap servers property used for configuration.
         /// </summary>
-        public static readonly string BOOTSTRAP_SERVERS = "bootstrap.servers";
+        public const string BootstrapServers = "bootstrap.servers";
 
         /// <summary>
         /// The schema registry URL property used for configuration.
         /// </summary>
-        public static readonly string SCHEMA_REGISTRY_URL = "schema.registry.url";
+        public const string SchemaRegistryUrl = "schema.registry.url";
 
         /// <summary>
         /// The group ID property used for configuration.
         /// </summary>
-        public static readonly string GROUP_ID = "group.id";
+        public const string GroupId = "group.id";
 
         private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageConsumer<T>>();
 
@@ -51,13 +51,13 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         public GojulMQKafkaMessageConsumer(Dictionary<string, object> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();
-            Condition.Requires((string)settings[BOOTSTRAP_SERVERS], BOOTSTRAP_SERVERS)
+            Condition.Requires((string)settings[BootstrapServers], BootstrapServers)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[GROUP_ID], GROUP_ID)
+            Condition.Requires((string)settings[GroupId], GroupId)
                 .IsNotNull()
                 .IsNotEmpty();
-            Condition.Requires((string)settings[SCHEMA_REGISTRY_URL], SCHEMA_REGISTRY_URL)
+            Condition.Requires((string)settings[SchemaRegistryUrl], SchemaRegistryUrl)
                 .IsNotNull()
                 .IsNotEmpty();
 
