@@ -62,11 +62,13 @@ namespace Org.Gojul.GojulMQ4Net.Api
                 log.Error(e, "Error with the MQ system");
                 throw;
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception e)
             {
                 log.Error(e, "Error processing message");
                 producer.SendMessage(errorTopic, msg => null, message);
             }
+#pragma warning restore CA1031 // Do not catch general exception types
 
         }
     }
