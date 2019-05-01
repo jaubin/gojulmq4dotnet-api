@@ -27,21 +27,21 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         /// <summary>
         /// The bootstrap servers property used for configuration.
         /// </summary>
-        public static readonly string BootstrapServers = "bootstrap.servers";
+        public const string BootstrapServers = "bootstrap.servers";
 
         /// <summary>
         /// The schema registry URL property used for configuration.
         /// </summary>
-        public static readonly string SchemaRegistryUrl = "schema.registry.url";
+        public const string SchemaRegistryUrl = "schema.registry.url";
 
         /// <summary>
         /// The client ID property used for configuration.
         /// </summary>
-        public static readonly string ClientId = "client.id";
+        public const string ClientId = "client.id";
 
         private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageProducer<T>>();
 
-        private readonly Producer<string, T> producer;
+        private readonly Producer<string, T> _producer;
 
         /// <summary>
         /// Constructor.
@@ -63,13 +63,13 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 .IsNotNull()
                 .IsNotEmpty();
 
-            producer = new Producer<string, T>(settings, new StringSerializer(Encoding.UTF8), new AvroSerializer<T>());
+            _producer = new Producer<string, T>(settings, new StringSerializer(Encoding.UTF8), new AvroSerializer<T>());
         }
 
         /// <see cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            producer.Dispose();
+            _producer.Dispose();
         }
 
         /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, GojulMQMessageKeyProvider{T}, T)"/>
@@ -96,10 +96,10 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 // We force the producer to produce synchronously. The goal here is to avoid
                 // hundreds of thread producing items in the loop, which would be a nightmare
                 // in term for performance.
-                producer.ProduceAsync(topic, messageKeyProvider(msg), msg).Wait();
+                _producer.ProduceAsync(topic, messageKeyProvider(msg), msg).Wait();
                 i++;
             }
-            producer.Flush(-1);
+            _producer.Flush(-1);
             log.Information(string.Format("Successfully sent %d messages to topic %s", i, topic));
 
         }

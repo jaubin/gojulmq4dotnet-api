@@ -17,9 +17,9 @@ namespace Org.Gojul.GojulMQ4Net.Api
 
         private static readonly ILogger log = Serilog.Log.ForContext<GojulMQFailedMessageListener<T>>();
 
-        private readonly IGojulMQMessageProducer<T> producer;
-        private readonly GojulMQMessageListener<T> listener;
-        private readonly string errorTopic;
+        private readonly IGojulMQMessageProducer<T> _producer;
+        private readonly GojulMQMessageListener<T> _listener;
+        private readonly string _errorTopic;
 
         /// <summary>
         /// Constructor.
@@ -35,9 +35,9 @@ namespace Org.Gojul.GojulMQ4Net.Api
             Condition.Requires(listener).IsNotNull();
             Condition.Requires(errorTopic).IsNotNullOrWhiteSpace();
 
-            this.producer = producer;
-            this.listener = listener;
-            this.errorTopic = errorTopic;
+            this._producer = producer;
+            this._listener = listener;
+            this._errorTopic = errorTopic;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Org.Gojul.GojulMQ4Net.Api
 
             try
             {
-                listener(message);
+                _listener(message);
             }
             catch (GojulMQException e)
             {
@@ -66,7 +66,7 @@ namespace Org.Gojul.GojulMQ4Net.Api
             catch (Exception e)
             {
                 log.Error(e, "Error processing message");
-                producer.SendMessage(errorTopic, msg => null, message);
+                _producer.SendMessage(_errorTopic, msg => null, message);
             }
 #pragma warning restore CA1031 // Do not catch general exception types
 

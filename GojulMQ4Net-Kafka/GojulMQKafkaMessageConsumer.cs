@@ -39,7 +39,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
 
         private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageConsumer<T>>();
 
-        private readonly Consumer<string, T> consumer;
+        private readonly Consumer<string, T> _consumer;
 
         /// <summary>
         /// Constructor.
@@ -61,7 +61,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 .IsNotNull()
                 .IsNotEmpty();
 
-            consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
+            _consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
                 new AvroDeserializer<T>());
         }
 
@@ -73,11 +73,11 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
             Condition.Requires(messageListener, "messageListener").IsNotNull();
             // CancellationToken cannot be null as it is a struct.
 
-            consumer.Subscribe(topic);
+            _consumer.Subscribe(topic);
 
-            consumer.OnConsumeError += (_, msg) =>
+            _consumer.OnConsumeError += (_, msg) =>
                 log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
-            consumer.OnError += (_, error) =>
+            _consumer.OnError += (_, error) =>
             {
                 log.Fatal(string.Format("A fatal error occurred - aborting consumer ! Reason : %s", error.Reason));
                 throw new GojulMQException(error.Reason);
@@ -87,7 +87,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
             {
                 int count = 0;
                 Message<string, T> msg;
-                while (consumer.Consume(out msg, 100)
+                while (_consumer.Consume(out msg, 100)
                       && !cancellationToken.IsCancellationRequested)
                 {
                     messageListener(msg.Value);
@@ -95,18 +95,18 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                     if (count % 100 == 0)
                     {
                         // We force synchronous commit there.
-                        consumer.CommitAsync().Wait();
+                        _consumer.CommitAsync().Wait();
                         count = 0;
                     }
                 }
 
                 if (count > 0)
                 {
-                    consumer.CommitAsync().Wait();
+                    _consumer.CommitAsync().Wait();
                 }
             }
 
-            consumer.Dispose();
+            _consumer.Dispose();
 
             cancellationToken.ThrowIfCancellationRequested();
         }
@@ -115,7 +115,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         /// <see cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            consumer.Dispose();
+            _consumer.Dispose();
         }
     }
 }
