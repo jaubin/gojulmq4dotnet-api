@@ -10,9 +10,9 @@ namespace Org.Gojul.GojulMQ4Net.Kafka_Test
 
     class Program
     {
-        private static Dictionary<string, object> CreateConf()
+        private static Dictionary<string, string> CreateConf()
         {
-            return new Dictionary<string, object>
+            return new Dictionary<string, string>
             {
                 { GojulMQKafkaMessageProducer<object>.BootstrapServers, "localhost:9092" },
                 { GojulMQKafkaMessageProducer<object>.ClientId, "TestProducer" },
@@ -24,7 +24,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka_Test
 
         static void Main(string[] args)
         {
-            Dictionary<string, object> settings = CreateConf();
+            Dictionary<string, string> settings = CreateConf();
 
             CancellationTokenSource cts = new CancellationTokenSource();
 

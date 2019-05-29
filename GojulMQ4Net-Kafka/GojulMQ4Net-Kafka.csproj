@@ -5,15 +5,16 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!-- Harmless warnings which pollute the build -->
     <NoWarn>NU5100,NU5118</NoWarn>
+    <RootNamespace>Org.Gojul.GojulMQ4Net.Kafka</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Conditions.NetStandard" Version="1.1.0" />
-    <PackageReference Include="Confluent.Kafka" Version="0.11.6" TargetFramework="net461" />
-    <PackageReference Include="Confluent.Kafka.Avro" Version="0.11.6" TargetFramework="net461" />
-    <PackageReference Include="librdkafka.redist" Version="1.0.0" TargetFramework="net461" />
+    <PackageReference Include="Confluent.Kafka" Version="1.0.1" TargetFramework="net461" />
+    <PackageReference Include="Confluent.SchemaRegistry.Serdes" Version="1.0.1" />
+    <PackageReference Include="librdkafka.redist" Version="1.0.1" TargetFramework="net461" />
     <PackageReference Include="Serilog" Version="2.8.0" />
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.1">
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

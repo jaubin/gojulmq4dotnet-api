@@ -1,11 +1,13 @@
 ﻿using Serilog;
 using Conditions;
 using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
 using Org.Gojul.GojulMQ4Net.Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Confluent.SchemaRegistry;
+using Confluent.SchemaRegistry.Serdes;
+using Confluent.Kafka.SyncOverAsync;
 
 namespace Org.Gojul.GojulMQ4Net.Kafka
 {
@@ -41,7 +43,9 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
 
         private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageProducer<T>>();
 
-        private readonly Producer<string, T> _producer;
+        private bool _disposed;
+        private readonly ISchemaRegistryClient _schemaRegistry;
+        private readonly IProducer<string, T> _producer;
 
         /// <summary>
         /// Constructor.
@@ -50,7 +54,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         /// the norm defined by Kafka settings.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is null.</exception>
         /// <exception cref="ArgumentException">if any of the mandatory Kafka parameters is not set.</exception>
-        public GojulMQKafkaMessageProducer(Dictionary<string, object> settings)
+        public GojulMQKafkaMessageProducer(Dictionary<string, string> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();
             Condition.Requires((string)settings[BootstrapServers], BootstrapServers)
@@ -63,13 +67,34 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 .IsNotNull()
                 .IsNotEmpty();
 
-            _producer = new Producer<string, T>(settings, new StringSerializer(Encoding.UTF8), new AvroSerializer<T>());
+            _disposed = false;
+            _schemaRegistry = new CachedSchemaRegistryClient(settings);
+            _producer = new ProducerBuilder<string, T>(KafkaSettingsList.SanitizeConfiguration(settings))
+                .SetKeySerializer(Serializers.Utf8)
+                .SetValueSerializer(new AvroSerializer<T>(_schemaRegistry).AsSyncOverAsync())
+                .Build();
         }
 
         /// <see cref="IDisposable.Dispose"/>
         public void Dispose()
         {
-            _producer.Dispose();
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (disposing && !_disposed)
+            {
+                _disposed = true;
+                try
+                {
+                    _producer.Dispose();
+                }
+                finally
+                {
+                    _schemaRegistry.Dispose();
+                }
+            }
         }
 
         /// <see cref="IGojulMQMessageProducer{T}.SendMessage(string, GojulMQMessageKeyProvider{T}, T)"/>
@@ -96,11 +121,12 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 // We force the producer to produce synchronously. The goal here is to avoid
                 // hundreds of thread producing items in the loop, which would be a nightmare
                 // in term for performance.
-                _producer.ProduceAsync(topic, messageKeyProvider(msg), msg).Wait();
+                var kafkaMessage = new Message<string, T> { Key = messageKeyProvider(msg), Value = msg };
+                _producer.Produce(topic, kafkaMessage);
                 i++;
             }
-            _producer.Flush(-1);
-            log.Information(string.Format("Successfully sent %d messages to topic %s", i, topic));
+            _producer.Flush();
+            log.Information(string.Format("Successfully sent {0} messages to topic {1}", i, topic));
 
         }
     }

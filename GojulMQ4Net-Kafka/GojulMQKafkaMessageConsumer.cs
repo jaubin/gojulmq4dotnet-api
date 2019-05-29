@@ -1,12 +1,14 @@
 ﻿using Serilog;
 using Conditions;
 using Confluent.Kafka;
-using Confluent.Kafka.Serialization;
 using Org.Gojul.GojulMQ4Net.Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Confluent.SchemaRegistry.Serdes;
+using Confluent.SchemaRegistry;
+using Confluent.Kafka.SyncOverAsync;
 
 namespace Org.Gojul.GojulMQ4Net.Kafka
 {
@@ -37,9 +39,11 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         /// </summary>
         public const string GroupId = "group.id";
 
-        private static readonly ILogger log = Serilog.Log.ForContext<GojulMQKafkaMessageConsumer<T>>();
+        private static readonly ILogger _log = Serilog.Log.ForContext<GojulMQKafkaMessageConsumer<T>>();
 
-        private readonly Consumer<string, T> _consumer;
+        private readonly ISchemaRegistryClient _schemaRegistry;
+        private readonly IConsumer<string, T> _consumer;
+        private bool _disposed;
 
         /// <summary>
         /// Constructor.
@@ -48,7 +52,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
         /// the norm defined by Kafka settings.</param>
         /// <exception cref="ArgumentNullException">if any of the method parameters is null.</exception>
         /// <exception cref="ArgumentException">if any of the mandatory Kafka parameters is not set.</exception>
-        public GojulMQKafkaMessageConsumer(Dictionary<string, object> settings)
+        public GojulMQKafkaMessageConsumer(Dictionary<string, string> settings)
         {
             Condition.Requires(settings, "settings").IsNotNull();
             Condition.Requires((string)settings[BootstrapServers], BootstrapServers)
@@ -61,9 +65,19 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
                 .IsNotNull()
                 .IsNotEmpty();
 
-            _consumer = new Consumer<string, T>(settings, new StringDeserializer(Encoding.UTF8),
-                new AvroDeserializer<T>());
+            _disposed = false;
+
+            _schemaRegistry = new CachedSchemaRegistryClient(settings);
+            _consumer = new ConsumerBuilder<string, T>(KafkaSettingsList.SanitizeConfiguration(settings))
+                .SetKeyDeserializer(Deserializers.Utf8)
+                .SetValueDeserializer(new AvroDeserializer<T>(_schemaRegistry).AsSyncOverAsync())
+                .SetErrorHandler((_, error) =>
+                {
+                    _log.Error(string.Format("Error while processing message %s - Skipping this message !", error));
+                })
+                .Build();
         }
+
 
         /// <see cref="IGojulMQMessageConsumer{T}.ConsumeMessages(string, OnMessage{T}, CancellationToken)"/>
         public void ConsumeMessages(string topic, GojulMQMessageListener<T> messageListener,
@@ -75,47 +89,70 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
 
             _consumer.Subscribe(topic);
 
-            _consumer.OnConsumeError += (_, msg) =>
-                log.Error(string.Format("Error while processing message %s - Skipping this message !", msg.Error));
-            _consumer.OnError += (_, error) =>
+            try
             {
-                log.Fatal(string.Format("A fatal error occurred - aborting consumer ! Reason : %s", error.Reason));
-                throw new GojulMQException(error.Reason);
-            };
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                int count = 0;
-                Message<string, T> msg;
-                while (_consumer.Consume(out msg, 100)
-                      && !cancellationToken.IsCancellationRequested)
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    messageListener(msg.Value);
-                    count++;
-                    if (count % 100 == 0)
+                    int count = 0;
+
+                    var msg = _consumer.Consume(cancellationToken);
+                    while (!cancellationToken.IsCancellationRequested)
                     {
-                        // We force synchronous commit there.
-                        _consumer.CommitAsync().Wait();
-                        count = 0;
+                        // We try to commit on every 100 messages, or when
+                        // the cancellation token has been triggered.
+                        if (msg != null)
+                        {
+                            messageListener(msg.Value);
+                            count++;
+                            if (count % 100 == 0)
+                            {
+                                _consumer.Commit();
+                                count = 0;
+                            }
+                        }
+                        msg = _consumer.Consume(cancellationToken);
+                    }
+
+                    if (count > 0)
+                    {
+                        _consumer.Commit();
                     }
                 }
-
-                if (count > 0)
-                {
-                    _consumer.CommitAsync().Wait();
-                }
             }
+            catch (KafkaException e)
+            {
+                _log.Fatal(e, string.Format("A fatal error occured : {0} - aborting the consumer", e.Message));
+                throw new GojulMQException("Kafka error encountered", e);
+    }
+            finally
+            {
+                Dispose(true);
+}
 
-            _consumer.Dispose();
-
-            cancellationToken.ThrowIfCancellationRequested();
+cancellationToken.ThrowIfCancellationRequested();
         }
 
 
         /// <see cref="IDisposable.Dispose"/>
         public void Dispose()
+{
+    Dispose(true);
+}
+
+private void Dispose(bool disposing)
+{
+    if (disposing && !_disposed)
+    {
+        _disposed = true;
+        try
         {
-            _consumer.Dispose();
+            _consumer.Close();
         }
+        finally
+        {
+            _schemaRegistry.Dispose();
+        }
+    }
+}
     }
 }
