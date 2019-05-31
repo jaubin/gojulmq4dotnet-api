@@ -123,36 +123,32 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
             {
                 _log.Fatal(e, string.Format("A fatal error occured : {0} - aborting the consumer", e.Message));
                 throw new GojulMQException("Kafka error encountered", e);
-    }
-            finally
-            {
-                Dispose(true);
-}
+            }            
 
-cancellationToken.ThrowIfCancellationRequested();
+            cancellationToken.ThrowIfCancellationRequested();
         }
 
 
         /// <see cref="IDisposable.Dispose"/>
         public void Dispose()
-{
-    Dispose(true);
-}
+        {
+            Dispose(true);
+        }
 
-private void Dispose(bool disposing)
-{
-    if (disposing && !_disposed)
-    {
-        _disposed = true;
-        try
+        private void Dispose(bool disposing)
         {
-            _consumer.Close();
+            if (disposing && !_disposed)
+            {
+                _disposed = true;
+                try
+                {
+                    _consumer.Close();
+                }
+                finally
+                {
+                    _schemaRegistry.Dispose();
+                }
+            }
         }
-        finally
-        {
-            _schemaRegistry.Dispose();
-        }
-    }
-}
     }
 }
