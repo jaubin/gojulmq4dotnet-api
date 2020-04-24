@@ -30,7 +30,8 @@ namespace Org.Gojul.GojulMQ4Net.Kafka_Test
 
             IGojulMQMessageConsumer<Dummy> consumer = new GojulMQKafkaMessageConsumer<Dummy>(settings);
 
-            new Thread(() => {
+            new Thread(() =>
+            {
                 consumer.ConsumeMessages("dummyTopic", (msg) => Console.WriteLine("Consumed : " + msg.value),
                     cts.Token);
             }).Start();
@@ -38,7 +39,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka_Test
             IGojulMQMessageProducer<Dummy> producer = new GojulMQKafkaMessageProducer<Dummy>(settings);
             Random rnd = new Random();
 
-            while(true)
+            while (true)
             {
                 Dummy dummy = new Dummy { value = "Hello, " + rnd.Next() };
                 producer.SendMessage("dummyTopic", e => e.value, dummy);

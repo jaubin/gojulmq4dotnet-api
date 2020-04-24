@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using Conditions;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
-using Conditions;
 
 namespace Org.Gojul.GojulMQ4Net.Kafka
 {

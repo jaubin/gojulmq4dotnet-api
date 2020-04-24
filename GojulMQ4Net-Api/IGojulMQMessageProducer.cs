@@ -21,7 +21,7 @@ namespace Org.Gojul.GojulMQ4Net.Api
     /// close it explicitely.
     /// </summary>
     /// <typeparam name="T">the type of messages to be produced.</typeparam>
-    public interface IGojulMQMessageProducer<T>: IDisposable
+    public interface IGojulMQMessageProducer<T> : IDisposable
     {
         /// <summary>
         /// Send the message <code>message</code> to the MQ on topic with name <code>topic</code>.

@@ -1,13 +1,10 @@
-using System;
-
 using Moq;
+using System;
 using Xunit;
-
-using Org.Gojul.GojulMQ4Net.Api;
 
 namespace Org.Gojul.GojulMQ4Net.Api.Tests
 {
-    public class GojulMQFailedMessageListenerTest: IDisposable
+    public class GojulMQFailedMessageListenerTest : IDisposable
     {
         private bool consumed;
 
@@ -30,7 +27,7 @@ namespace Org.Gojul.GojulMQ4Net.Api.Tests
         [Fact]
         public void TestConstructorWithNullListenerThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(() => new GojulMQFailedMessageListener<object>(new Mock<IGojulMQMessageProducer<object>>().Object, 
+            Assert.Throws<ArgumentNullException>(() => new GojulMQFailedMessageListener<object>(new Mock<IGojulMQMessageProducer<object>>().Object,
                 null, "hello"));
         }
 

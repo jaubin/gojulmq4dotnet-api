@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿using Conditions;
 using Serilog;
-using Conditions;
+using System;
 
 namespace Org.Gojul.GojulMQ4Net.Api
 {

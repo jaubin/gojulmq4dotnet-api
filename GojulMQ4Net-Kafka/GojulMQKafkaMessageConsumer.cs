@@ -1,14 +1,13 @@
-﻿using Serilog;
-using Conditions;
+﻿using Conditions;
 using Confluent.Kafka;
+using Confluent.Kafka.SyncOverAsync;
+using Confluent.SchemaRegistry;
+using Confluent.SchemaRegistry.Serdes;
 using Org.Gojul.GojulMQ4Net.Api;
+using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using Confluent.SchemaRegistry.Serdes;
-using Confluent.SchemaRegistry;
-using Confluent.Kafka.SyncOverAsync;
 
 namespace Org.Gojul.GojulMQ4Net.Kafka
 {
@@ -123,7 +122,7 @@ namespace Org.Gojul.GojulMQ4Net.Kafka
             {
                 _log.Fatal(e, string.Format("A fatal error occured : {0} - aborting the consumer", e.Message));
                 throw new GojulMQException("Kafka error encountered", e);
-            }            
+            }
 
             cancellationToken.ThrowIfCancellationRequested();
         }

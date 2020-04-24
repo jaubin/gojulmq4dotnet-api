@@ -25,7 +25,7 @@ namespace Org.Gojul.GojulMQ4Net.Api
     /// close it explicitely.
     /// </summary>
     /// <typeparam name="T">the type of messages to listen to.</typeparam>
-    public interface IGojulMQMessageConsumer<T>: IDisposable
+    public interface IGojulMQMessageConsumer<T> : IDisposable
     {
         /// <summary>
         /// Consume the messages from topic with name <code>topic</code>.

@@ -1,13 +1,12 @@
-﻿using Serilog;
-using Conditions;
+﻿using Conditions;
 using Confluent.Kafka;
-using Org.Gojul.GojulMQ4Net.Api;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Confluent.Kafka.SyncOverAsync;
 using Confluent.SchemaRegistry;
 using Confluent.SchemaRegistry.Serdes;
-using Confluent.Kafka.SyncOverAsync;
+using Org.Gojul.GojulMQ4Net.Api;
+using Serilog;
+using System;
+using System.Collections.Generic;
 
 namespace Org.Gojul.GojulMQ4Net.Kafka
 {

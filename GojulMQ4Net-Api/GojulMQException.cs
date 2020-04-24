@@ -7,8 +7,8 @@ namespace Org.Gojul.GojulMQ4Net.Api
     /// type of exception to be seen when a message transfer error
     /// occurs.
     /// </summary>
-	public class GojulMQException: Exception
-	{
+	public class GojulMQException : Exception
+    {
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -21,7 +21,7 @@ namespace Org.Gojul.GojulMQ4Net.Api
         /// Constructor.
         /// </summary>
         /// <param name="message">the error message.</param>
-        public GojulMQException(string message): base(message)
+        public GojulMQException(string message) : base(message)
         {
         }
 
@@ -30,8 +30,8 @@ namespace Org.Gojul.GojulMQ4Net.Api
         /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="cause">the exception which caused the error.</param>
-        public GojulMQException(string message, Exception cause): base(message, cause)
+        public GojulMQException(string message, Exception cause) : base(message, cause)
         {
         }
-	}
+    }
 }
